@@ -1,0 +1,43 @@
+
+group 'com.altran.igjava'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+
+sourceCompatibility = 1.8
+
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+configurations {
+    asciidoclet
+}
+
+
+
+dependencies {
+    asciidoclet 'org.asciidoctor:asciidoclet:1.5.4'
+}
+
+javadoc {
+    options.docletpath = configurations.asciidoclet.files.asType(List)
+    options.doclet('org.asciidoctor.Asciidoclet')
+    options.overview = 'src/main/java/overview.adoc'
+    options.addStringOption "-base-dir", "${projectDir}"
+    options.addStringOption "-attribute",
+            "name=${project.name}," +
+            "version=${project.version}," +
+            "data-uri=''"
+            //"config=${projectDir/src/main/resources}"
+    options.addStringOption "-gem-path", "/usr/local/lib/ruby/gems/2.4.0"
+    options.addStringOption "-require"
+    options.addStringOption "-require", "asciidoctor-diagram"
+    //options.addStringOption "config", "${projectDir/src/main/resources}"
+    //options.atributes['data-uri'] = ''
+
+}
+
